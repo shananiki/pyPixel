@@ -5,6 +5,7 @@ from win32con import *
 import time
 import bezier
 import numpy as np
+import random
 
 
 class Mouse:
@@ -31,8 +32,30 @@ class Mouse:
         start = GetCursorPos()
         end = destinationPoint
         # Two intermediate control points that may be adjusted to modify the curve.
-        control1 = start[0] + 125, start[1] + 100
-        control2 = start[0] + 375, start[1] + 50
+
+        if start[0] < end[0]:
+            rand_control1 = random.randint(start[0], end[0]) + random.randint(0,200)
+        else:
+            rand_control1 = random.randint(end[0], start[0]) + random.randint(0,200)
+
+        if start[1] < end[1]:
+            rand_control2 = random.randint(start[1], end[1]) + random.randint(0,200)
+        else:
+            rand_control2 = random.randint(end[1], start[1]) + random.randint(0,200)
+
+        control1 = rand_control1, rand_control2
+
+        if start[0] < end[0]:
+            rand_control1 = random.randint(start[0], end[0])
+        else:
+            rand_control1 = random.randint(end[0], start[0])
+
+        if start[1] < end[1]:
+            rand_control2 = random.randint(start[1], end[1])
+        else:
+            rand_control2 = random.randint(end[1], start[1])
+
+        control2 = rand_control1, rand_control2
 
         # Format points to use with bezier
         control_points = np.array([start, control1, control2, end])
