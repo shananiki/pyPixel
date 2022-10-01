@@ -3,9 +3,13 @@ from win32api import *
 from win32com import *
 from win32con import *
 import time
-import bezier
-import numpy as np
+import beziers
 import random
+
+###
+import numpy as np
+from scipy import interpolate
+import math
 
 
 class Mouse:
@@ -13,6 +17,9 @@ class Mouse:
     def __init__(self):
         self.pos_x = GetCursorPos()[0]
         self.pos_y = GetCursorPos()[1]
+
+    def getMousePos(self):
+        return (GetCursorPos()[0], GetCursorPos()[1])
 
     def moveTo(self, x, y):
         SetCursorPos((x, y))
@@ -27,54 +34,44 @@ class Mouse:
         time.sleep(.1)
         mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0)
 
-    def bezier(self, destinationPoint):
-        # For this example we'll use four control points, including start and end coordinates
+    def point_dist(self, x1, y1, x2, y2):
+        return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+
+    def moveToSquare(self, x, y, x2, y2):
+        random_x = random.randint(x, x2)
+        random_y = random.randint(y, y2)
+        self.bez(random_x, random_y)
+
+    def bez(self, x2, y2):
+        cp = 3
         start = GetCursorPos()
-        end = destinationPoint
-        # Two intermediate control points that may be adjusted to modify the curve.
+        x1 = start[0]
+        y1 = start[1]
 
-        if start[0] < end[0]:
-            rand_control1 = random.randint(start[0], end[0]) + random.randint(0,200)
-        else:
-            rand_control1 = random.randint(end[0], start[0]) + random.randint(0,200)
+        # Distribute control points between start and destination evenly.
+        x = np.linspace(x1, x2, num=cp, dtype='int')
+        y = np.linspace(y1, y2, num=cp, dtype='int')
 
-        if start[1] < end[1]:
-            rand_control2 = random.randint(start[1], end[1]) + random.randint(0,200)
-        else:
-            rand_control2 = random.randint(end[1], start[1]) + random.randint(0,200)
+        # Randomise inner points a bit (+-RND at most).
+        RND = 20
+        xr = [random.randint(-RND, RND) for k in range(cp)]
+        yr = [random.randint(-RND, RND) for k in range(cp)]
+        xr[0] = yr[0] = xr[-1] = yr[-1] = 0
+        x += xr
+        y += yr
 
-        control1 = rand_control1, rand_control2
+        # Approximate using Bezier spline.
+        degree = 3 if cp > 3 else cp - 1  # Degree of b-spline. 3 is recommended.
+        # Must be less than number of control points.
+        tck, u = interpolate.splprep([x, y], k=degree)
+        # Move upto a certain number of points
+        u = np.linspace(0, 1, num=2 + int(self.point_dist(x1, y1, x2, y2) / 50.0))
+        points = interpolate.splev(u, tck)
 
-        if start[0] < end[0]:
-            rand_control1 = random.randint(start[0], end[0])
-        else:
-            rand_control1 = random.randint(end[0], start[0])
-
-        if start[1] < end[1]:
-            rand_control2 = random.randint(start[1], end[1])
-        else:
-            rand_control2 = random.randint(end[1], start[1])
-
-        control2 = rand_control1, rand_control2
-
-        # Format points to use with bezier
-        control_points = np.array([start, control1, control2, end])
-        points = np.array([control_points[:, 0], control_points[:, 1]])  # Split x and y coordinates
-
-        # You can set the degree of the curve here, should be less than # of control points
-        degree = 3
-        # Create the bezier curve
-        curve = bezier.Curve(points, degree)
-        # You can also create it with using Curve.from_nodes(), which sets degree to len(control_points)-1
-        # curve = bezier.Curve.from_nodes(points)
-
-        curve_steps = 120  # How many points the curve should be split into. Each is a separate pyautogui.moveTo() execution
-        delay = 1 / curve_steps  # Time between movements. 1/curve_steps = 1 second for entire curve
-
-        # Move the mouse
-        for i in range(1, curve_steps + 1):
-            # The evaluate method takes a float from [0.0, 1.0] and returns the coordinates at that point in the curve
-            # Another way of thinking about it is that i/steps gets the coordinates at (100*i/steps) percent into the curve
-            x, y = curve.evaluate(i / curve_steps)
-            SetCursorPos((int(x), int(y))) # Move to point in curve
-            time.sleep(delay)  # Wait delay
+        # Move mouse.
+        duration = 0.1
+        timeout = duration / len(points[0])
+        point_list = zip(*(i.astype(int) for i in points))
+        for point in point_list:
+            SetCursorPos(point)
+            time.sleep(timeout + random.randint(20, 40)/1000)
