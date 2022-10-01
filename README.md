@@ -3,10 +3,6 @@ This project is written in Python 3.10.4
 
 
 ## Requirements
-- Python 3.10.4 (any other Version should work as long as you get all the requirements)
-- numpy
-- bezier ([Troubleshoot](https://github.com/dhermes/bezier/issues/277))
-- pywin32 (includes win32gui, win32api, win32com)
 ```cmd
 python -m pip install numpy
 python -m pip install scipy
