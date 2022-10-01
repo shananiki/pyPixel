@@ -31,9 +31,9 @@ Right click
 m.right()
 ```
 
+Moves mouse to given point using a benzier curve
 ```python
 m.bez(200, 200)
-m.left()
 ```
 
 Moves mouse to a random point within rectangle, using benzier curve
