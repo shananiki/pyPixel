@@ -1,7 +1,8 @@
 # pyscript - Automation tool for Windows
+# NICE DEPENDENCY INJECTION LOL
+## The code is written quick and dirty I will tidy up soon - major space for improvement
 This project is written in Python 3.10.4
 
-Major space for code improvement, but I'm still building so I don't tidy up just yet.
 
 
 ## Requirements
