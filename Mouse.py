@@ -14,9 +14,10 @@ import math
 
 class Mouse:
 
-    def __init__(self):
+    def __init__(self, window):
         self.pos_x = GetCursorPos()[0]
         self.pos_y = GetCursorPos()[1]
+        self.window = window
 
     def getMousePos(self):
         return (GetCursorPos()[0], GetCursorPos()[1])
@@ -37,10 +38,20 @@ class Mouse:
     def point_dist(self, x1, y1, x2, y2):
         return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 
+    def moveToSquare_r(self, rect):
+        random_x = random.randint(rect[0], rect[2])
+        random_y = random.randint(rect[1], rect[3])
+        self.bez_w(random_x, random_y)
+
     def moveToSquare(self, x, y, x2, y2):
         random_x = random.randint(x, x2)
         random_y = random.randint(y, y2)
-        self.bez(random_x, random_y)
+        self.bez_w(random_x, random_y)
+
+
+
+    def bez_w(self, x, y):
+        self.bez(self.window.getX() + x, self.window.getY() + y)
 
     def bez(self, x2, y2):
         cp = 3

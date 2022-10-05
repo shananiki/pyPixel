@@ -16,12 +16,21 @@ class Window:
         self.screen_w = GetSystemMetrics(0)
         self.screen_h = GetSystemMetrics(1)
 
+    def updateWindowPos(self):
+        self.window_rect = GetWindowRect(self.window_handle)
+        self.x = self.window_rect[0]
+        self.y = self.window_rect[1]
+        self.w = self.window_rect[2]
+        self.h = self.window_rect[3]
+
+    def getHwnd(self):
+        return self.window_handle
+
     def getMouseInWindow(self):
-        m = Mouse()
+        m = Mouse(self)
         mouse_pos = m.getMousePos()
         mouse_in_window_x = mouse_pos[0] - self.x
         mouse_in_window_y = mouse_pos[1] - self.y
-        print((mouse_in_window_x, mouse_in_window_y))
         return (mouse_in_window_x, mouse_in_window_y)
 
     def printWindowPos(self):
@@ -36,6 +45,9 @@ class Window:
 
     def getScreenHeight(self):
         return self.screen_h
+
+    def getWindowRect(self):
+        return self.window_rect
 
     def getX(self):
         return self.x
