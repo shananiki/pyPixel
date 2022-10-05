@@ -11,10 +11,10 @@ class RGB:
 
 class WindowGrabber:
 
-    def __init__(self, hwnd):
-        self.window_hwnd = hwnd
+    def __init__(self, window):
         self.image = None
-        self.window = Window(hwnd)
+        self.window = window
+        self.window_hwnd = window.getHwnd()
 
     def screenshot(self):
         SetForegroundWindow(self.window_hwnd)
