@@ -1,5 +1,8 @@
 # pyscript - Automation tool for Windows
+# NICE DEPENDENCY INJECTION LOL
+## The code is written quick and dirty I will tidy up soon - major space for improvement
 This project is written in Python 3.10.4
+
 
 
 ## Requirements
@@ -13,6 +16,50 @@ python -m pip install pynput
 
 # Documentation (more comming soon...)
 
+## Interface class
+
+Contains rectangle for Inventory icon
+```python
+self.INVENTORY_POS
+```
+
+Returns True if the inventory is open
+```python
+def isInventoryOpen(self):
+```
+
+Opens the inventory if closed
+```python
+def openInventory(self):
+```
+
+## Inventory class
+
+Contains x and y coordinates for all 28 inventory spots
+```python
+self.INVENTORY_POS
+```
+
+Drops all inventory items
+```python
+def drop_all(self):
+```
+
+Drops all inventory items exceptions given in tuple
+```python
+def drop_all_except(self, exceptions):
+```
+
+Drops item at position n (1-28)
+```python
+def drop_item(self, n):
+```
+
+Return True if the Inventory is full
+```python
+def isInventoryFull(self):
+```
+
 ## Mouse class
 
 Return current mouse position on screen, for debugging purposes
@@ -22,23 +69,28 @@ def getMousePos(self):
 
 Left click
 ```python
-m = Mouse() #needs to be initialized once
-m.left()
+def left(self):
 ```
 
 Right click
 ```python
-m.right()
+def right(self):
 ```
 
-Moves mouse to given point using a benzier curve
+Moves mouse to given point within the window rectangle using a benzier curve
 ```python
-m.bez(200, 200)
+m.bez_w(self, x, y):
+```
+
+Moves mouse to given point (whole screen) using a benzier curve
+```python
+m.bez(self, x, y):
 ```
 
 Moves mouse to a random point within rectangle, using benzier curve
 ```python
 def moveToSquare(self, x, y, x2, y2):
+def moveToSquare_r(self, rect):
 ```
 
 Instantly moves cursor to given position
@@ -70,4 +122,6 @@ Returns mouse position within the chosen window
 ```python
 def getMouseInWindow(self):
 ```
+
+
 
