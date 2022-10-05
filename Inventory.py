@@ -9,7 +9,7 @@ from Core import *
 
 class Inventory:
 
-    def __init__(self, wg, m, w):
+    def __init__(self, wg: WindowGrabber, m: Mouse, w: Window):
         self.window_grabber = wg
         self.mouse = m
         self.window = w
@@ -44,6 +44,14 @@ class Inventory:
             [699, 465, 715, 481]
         ]
 
+    def isInventoryFull(self):
+        poss = (708, 472)
+        clr = (75, 66, 58)
+        if not self.window_grabber.isColorAt(poss, clr):
+            return True
+        else:
+            return False
+
     def drop_all(self):
         for i in range(0, 27):
             self.drop_item(self, i)
@@ -51,7 +59,7 @@ class Inventory:
             self.mouse.left()
             sleep_s()
 
-    def drop_all_except(self, exceptions):
+    def drop_all_except(self, exceptions: tuple[int, ...]):
         for i in range(0, 27):
             if i in exceptions:
                 continue
@@ -61,6 +69,6 @@ class Inventory:
                 self.mouse.left()
                 sleep_s()
     
-    def drop_item(self, n):
+    def drop_item(self, n: int):
         n = n - 1
         self.mouse.moveToSquare_r(self.INVENTORY_POS[n])

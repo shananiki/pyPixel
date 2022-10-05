@@ -2,6 +2,7 @@ from win32gui import *
 from PIL import ImageGrab
 from Window import *
 
+
 class RGB:
 
     def __init__(self, r, g, b):
@@ -9,9 +10,10 @@ class RGB:
         self.g = g
         self.b = b
 
+
 class WindowGrabber:
 
-    def __init__(self, window):
+    def __init__(self, window: Window):
         self.image = None
         self.window = window
         self.window_hwnd = window.getHwnd()
@@ -22,25 +24,25 @@ class WindowGrabber:
         self.image = ImageGrab.grab(dimensions)
         return self.image
 
-    def getPixel(self, pos, type=""):
-        if self.image == None:
+    def getPixel(self, pos: tuple[int, int], mode: str = ""):
+        if self.image is None:
             self.screenshot()
-        if type == "RGB":
+        if mode == "RGB":
             return RGB()
         else:
             return self.image.getpixel(pos)
 
-    def isColorAt(self, pos, RGB):
-        if self.image == None:
+    def isColorAt(self, pos: tuple[int, int], rgb: tuple[int, ...]):
+        if self.image is None:
             self.screenshot()
         pixel = self.image.getpixel((pos[0], pos[1]))
-        if (pixel[0] == RGB[0]) and (pixel[1] == RGB[1]) and (pixel[2] == RGB[2]):
+        if (pixel[0] == rgb[0]) and (pixel[1] == rgb[1]) and (pixel[2] == rgb[2]):
             return True
         else:
             return False
 
-    def findPixel(self, RGB):
-        if self.image == None:
+    def findPixel(self, rgb: tuple[int, ...]):
+        if self.image is None:
             self.screenshot()
 
         x = self.image.size[0]
@@ -48,6 +50,6 @@ class WindowGrabber:
         for x in range(0, x):
             for y in range(0, y):
                 pixel = self.image.getpixel((x, y))
-                if (pixel[0] == RGB[0]) and (pixel[1] == RGB[1]) and (pixel[2] == RGB[2]):
+                if (pixel[0] == rgb[0]) and (pixel[1] == rgb[1]) and (pixel[2] == rgb[2]):
                     return (x, y)
         return "Not found"

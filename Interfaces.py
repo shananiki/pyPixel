@@ -9,7 +9,7 @@ from Core import *
 
 class Interfaces:
 
-    def __init__(self, wg, m, w):
+    def __init__(self, wg: WindowGrabber, m: Mouse, w: Window):
         self.window_grabber = wg
         self.mouse = m
         self.window = w

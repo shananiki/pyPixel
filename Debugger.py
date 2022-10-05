@@ -37,9 +37,12 @@ def execute():
     inv = Inventory(window_grabber, mouse, w)
     #inv.drop_item(5)
 
+
+
+
     #
     print("Mouse Position in Window: {0}".format(mouse_pos_in_window))
-    #print("Color at Mouse Position: {0}".format(window_grabber.getPixel(mouse_pos_in_window)))
+    print("Color at Mouse Position: {0}".format(window_grabber.getPixel(mouse_pos_in_window)))
     #
     # print("Looking for Pixel (30, 30, 30)")
     # find_pos = window_grabber.findPixel((10, 87, 347))

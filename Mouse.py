@@ -5,7 +5,7 @@ from win32con import *
 import time
 import beziers
 import random
-
+from Window import *
 ###
 import numpy as np
 from scipy import interpolate
@@ -14,10 +14,16 @@ import math
 
 class Mouse:
 
-    def __init__(self, window):
+    def __init__(self, window: Window):
         self.pos_x = GetCursorPos()[0]
         self.pos_y = GetCursorPos()[1]
         self.window = window
+
+    def shift_down(self):
+        keybd_event(0x10, 0, 0, 0)
+
+    def shift_up(self):
+        keybd_event(0x10, 0, KEYEVENTF_KEYUP, 0)
 
     def getMousePos(self):
         return (GetCursorPos()[0], GetCursorPos()[1])
@@ -35,25 +41,23 @@ class Mouse:
         time.sleep(.1)
         mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0)
 
-    def point_dist(self, x1, y1, x2, y2):
+    def point_dist(self, x1: int, y1: int, x2: int, y2: int):
         return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 
-    def moveToSquare_r(self, rect):
+    def moveToSquare_r(self, rect: tuple[int, int, int, int]):
         random_x = random.randint(rect[0], rect[2])
         random_y = random.randint(rect[1], rect[3])
         self.bez_w(random_x, random_y)
 
-    def moveToSquare(self, x, y, x2, y2):
+    def moveToSquare(self, x: int, y: int, x2: int, y2: int):
         random_x = random.randint(x, x2)
         random_y = random.randint(y, y2)
         self.bez_w(random_x, random_y)
 
-
-
-    def bez_w(self, x, y):
+    def bez_w(self, x: int, y: int):
         self.bez(self.window.getX() + x, self.window.getY() + y)
 
-    def bez(self, x2, y2):
+    def bez(self, x2: int, y2: int):
         cp = 3
         start = GetCursorPos()
         x1 = start[0]
