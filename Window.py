@@ -1,7 +1,10 @@
-from Mouse import *
+
 from win32gui import *
 from win32gui import SetCursor
 from win32api import *
+
+from Mouse import *
+
 
 class Window:
 
@@ -27,8 +30,7 @@ class Window:
         return self.window_handle
 
     def getMouseInWindow(self):
-        m = Mouse(self)
-        mouse_pos = m.getMousePos()
+        mouse_pos = GetCursorPos()[0], GetCursorPos()[1]
         mouse_in_window_x = mouse_pos[0] - self.x
         mouse_in_window_y = mouse_pos[1] - self.y
         return (mouse_in_window_x, mouse_in_window_y)

@@ -33,9 +33,10 @@ class WindowGrabber:
             return self.image.getpixel(pos)
 
     def isColorAt(self, pos: tuple[int, int], rgb: tuple[int, ...]):
-        if self.image is None:
-            self.screenshot()
+        self.screenshot()
         pixel = self.image.getpixel((pos[0], pos[1]))
+        print("Looking for {0} at {1}".format(rgb, pos))
+        print("Found Pixel {0} at {1}".format(pixel, pos))
         if (pixel[0] == rgb[0]) and (pixel[1] == rgb[1]) and (pixel[2] == rgb[2]):
             return True
         else:

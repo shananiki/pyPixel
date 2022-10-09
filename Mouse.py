@@ -26,7 +26,7 @@ class Mouse:
         keybd_event(0x10, 0, KEYEVENTF_KEYUP, 0)
 
     def getMousePos(self):
-        return (GetCursorPos()[0], GetCursorPos()[1])
+        return GetCursorPos()[0], GetCursorPos()[1]
 
     def moveTo(self, x, y):
         SetCursorPos((x, y))
@@ -40,6 +40,15 @@ class Mouse:
         mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0)
         time.sleep(.1)
         mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0)
+
+    def inArea(self, rect):
+        self.now_x, self.now_y = self.window.getMouseInWindow()
+        if self.now_x > rect[0] and self.now_x < rect[2] and self.now_y > rect[1] and self.now_y < rect[3]:
+            print("In Area")
+            return True
+        else:
+            print("Not in Area")
+            return False
 
     def point_dist(self, x1: int, y1: int, x2: int, y2: int):
         return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
@@ -89,4 +98,4 @@ class Mouse:
         point_list = zip(*(i.astype(int) for i in points))
         for point in point_list:
             SetCursorPos(point)
-            time.sleep(timeout + random.randint(20, 40)/1000)
+            time.sleep(timeout + random.randint(20, 40) / 1000)

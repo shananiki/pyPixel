@@ -35,7 +35,10 @@ def execute():
     i = Interfaces(window_grabber, mouse, w)
     #i.openInventory()
     inv = Inventory(window_grabber, mouse, w)
-    #inv.drop_item(5)
+    if inv.isInventoryFull():
+        print("FULL")
+    else:
+        print("NOT FULL")
 
 
 
