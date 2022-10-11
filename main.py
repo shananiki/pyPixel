@@ -47,27 +47,28 @@ for i in range(0, 50000):
     else:
         m.moveToSquare_r(rock1)
         sleep_s()
+        window_grabber.sleepUntilNotColor(clr1_pos, clr1)
         m.left()
-        sleep_s()
-        window_grabber.sleepUntilColor(clr1_pos, clr1)
         if inv.isInventoryFull():
             inv.drop_all()
+        window_grabber.sleepUntilColor(clr1_pos, clr1)
         sleep_s()
         m.moveToSquare_r(rock2)
         sleep_s()
+        window_grabber.sleepUntilNotColor(clr2_pos, clr2)
         m.left()
-        window_grabber.sleepUntilColor(clr2_pos, clr2)
         if inv.isInventoryFull():
             inv.drop_all()
+        window_grabber.sleepUntilColor(clr2_pos, clr2)
         sleep_s()
         m.moveToSquare_r(rock3)
         sleep_s()
+        window_grabber.sleepUntilNotColor(clr3_pos, clr3)
         m.left()
-        window_grabber.sleepUntilColor(clr3_pos, clr3)
         if inv.isInventoryFull():
             inv.drop_all()
+        window_grabber.sleepUntilColor(clr3_pos, clr3)
         sleep_s()
-        m.left()
 
 
 long_wait_counter = 30

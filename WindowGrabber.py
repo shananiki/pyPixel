@@ -1,7 +1,7 @@
 from win32gui import *
 from PIL import ImageGrab
 from Window import *
-
+import time
 
 class RGB:
 
@@ -44,6 +44,10 @@ class WindowGrabber:
 
     def sleepUntilColor(self, pos, rgb):
         while self.isColorAt(pos, rgb):
+            time.sleep(1)
+
+    def sleepUntilNotColor(self, pos, rgb):
+        while not self.isColorAt(pos, rgb):
             time.sleep(1)
 
     def findPixel(self, rgb: tuple[int, ...]):
