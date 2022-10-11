@@ -45,11 +45,11 @@ class Inventory:
         ]
 
     def isInventoryFull(self):
-        poss = (708, 472)
-        clr = (75, 66, 58)
+        poss = (708, 474)
+        clr = (84, 55, 42)
         poss2 = (713, 477)
         clr2 = (73, 64, 53)
-        if not self.window_grabber.isColorAt(poss, clr) or not self.window_grabber.isColorAt(poss2, clr2):
+        if self.window_grabber.isColorAt(poss, clr):
             return True
         else:
             return False

@@ -42,6 +42,10 @@ class WindowGrabber:
         else:
             return False
 
+    def sleepUntilColor(self, pos, rgb):
+        while self.isColorAt(pos, rgb):
+            time.sleep(1)
+
     def findPixel(self, rgb: tuple[int, ...]):
         if self.image is None:
             self.screenshot()

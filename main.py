@@ -25,23 +25,61 @@ window_grabber.screenshot()
 m = Mouse(w)
 
 
-
+rock1 = (220, 46, 289, 113)
+rock2 = (110, 163, 163, 225)
+rock3 = (223, 263, 287, 326)
 #m.bez_w(10, 10)
 
-long_wait_counter = 30
+
+clr1_pos = (273, 93)
+clr1 = (93, 49, 38)
+
+clr2_pos = (137, 176)
+clr2 = (81, 45, 35)
+
+clr3_pos = (240, 276)
+clr3 = (78, 43, 33)
+
 inv = Inventory(window_grabber, m, w)
 for i in range(0, 50000):
-    full = inv.isInventoryFull()
-    if full:
+    if inv.isInventoryFull():
         inv.drop_all()
     else:
+        m.moveToSquare_r(rock1)
         sleep_s()
-        if not m.inArea((330, 175, 404, 250)):
-            m.moveToSquare_r((330, 175, 404, 250))
-            m.left()
-        else:
-            sleep_s()
-            m.left()
+        m.left()
+        sleep_s()
+        window_grabber.sleepUntilColor(clr1_pos, clr1)
+        if inv.isInventoryFull():
+            inv.drop_all()
+        sleep_s()
+        m.moveToSquare_r(rock2)
+        sleep_s()
+        m.left()
+        window_grabber.sleepUntilColor(clr2_pos, clr2)
+        if inv.isInventoryFull():
+            inv.drop_all()
+        sleep_s()
+        m.moveToSquare_r(rock3)
+        sleep_s()
+        m.left()
+        window_grabber.sleepUntilColor(clr3_pos, clr3)
+        if inv.isInventoryFull():
+            inv.drop_all()
+        sleep_s()
+        m.left()
+
+
+long_wait_counter = 30
+
+# for i in range(0, 50000):
+#     full = inv.isInventoryFull()
+#     if full:
+#         inv.drop_all()
+#     else:
+#         sleep_s()
+#         m.moveToSquare_r(rock1)
+#         m.left()
 
 
 # for i in range(0, 1200):
