@@ -24,77 +24,53 @@ window_grabber.screenshot()
 
 m = Mouse(w)
 
+locker = (344, 150, 401, 231)
+paste = (573, 284, 586, 301)
+floor = (235, 178, 256, 205)
+paste_in_locker = (410, 265, 432, 292)
 
-rock1 = (220, 46, 289, 113)
-rock2 = (110, 163, 163, 225)
-rock3 = (223, 263, 287, 326)
-#m.bez_w(10, 10)
+square_spell = (664, 261, 675, 275)
+square_enemy = (379, 193, 406, 231)
 
+long_wait_counter = 10
+second_wait = 10
 
-clr1_pos = (273, 93)
-clr1 = (93, 49, 38)
+bank = (1024, 387, 1157, 602)
+bank_all = (891, 729, 921, 763)
+item_1 = (725, 453, 751, 479)
+close_bank = (963, 40, 979, 60)
+inv_item_1 = (1350, 606, 1371, 628)
+inv_item_2 = (1411, 607, 1444, 635)
+make_all = (504, 865, 570, 954)
 
-clr2_pos = (137, 176)
-clr2 = (81, 45, 35)
-
-clr3_pos = (240, 276)
-clr3 = (78, 43, 33)
-
-inv = Inventory(window_grabber, m, w)
-for i in range(0, 50000):
-    if inv.isInventoryFull():
-        inv.drop_all()
-    else:
-        m.moveToSquare_r(rock1)
-        sleep_s()
-        window_grabber.sleepUntilNotColor(clr1_pos, clr1)
-        m.left()
-        if inv.isInventoryFull():
-            inv.drop_all()
-        window_grabber.sleepUntilColor(clr1_pos, clr1)
-        sleep_s()
-        m.moveToSquare_r(rock2)
-        sleep_s()
-        window_grabber.sleepUntilNotColor(clr2_pos, clr2)
-        m.left()
-        if inv.isInventoryFull():
-            inv.drop_all()
-        window_grabber.sleepUntilColor(clr2_pos, clr2)
-        sleep_s()
-        m.moveToSquare_r(rock3)
-        sleep_s()
-        window_grabber.sleepUntilNotColor(clr3_pos, clr3)
-        m.left()
-        if inv.isInventoryFull():
-            inv.drop_all()
-        window_grabber.sleepUntilColor(clr3_pos, clr3)
-        sleep_s()
-
-
-long_wait_counter = 30
-
-# for i in range(0, 50000):
-#     full = inv.isInventoryFull()
-#     if full:
-#         inv.drop_all()
-#     else:
-#         sleep_s()
-#         m.moveToSquare_r(rock1)
-#         m.left()
+for i in range(0, 40):
+    m.moveToSquare_r(bank)
+    rnd(40, 80)
+    m.left()
+    rnd(1200, 1800)
+    m.moveToSquare_r(bank_all)
+    rnd(40, 80)
+    m.left()
+    m.moveToSquare_r(item_1)
+    rnd(40, 80)
+    m.left()
+    m.moveToSquare_r(close_bank)
+    rnd(40, 80)
+    m.left()
+    rnd(500, 1000)
+    m.moveToSquare_r(inv_item_1)
+    rnd(40, 80)
+    m.left()
+    m.moveToSquare_r(inv_item_2)
+    rnd(40, 80)
+    m.left()
+    rnd(400, 800)
+    m.moveToSquare_r(make_all)
+    rnd(40, 80)
+    m.left()
+    rnd(39000, 44000)
 
 
-# for i in range(0, 1200):
-#     long_wait = False
-#     long_wait_counter = long_wait_counter - 1
-#     if long_wait_counter == 2:
-#         rnd(2000, 3500)
-#         long_wait_counter = random.randint(10, 30)
-#     else:
-#         rnd(400, 800)
-#     m.moveToSquare_r((665, 262, 679, 276))
-#     rnd(40, 400)
-#     m.left()
-#     rnd(250, 500)
-#     m.moveToSquare_r((390, 195, 421, 235))
-#     rnd(250, 500)
-#     m.left()
+
+
+
